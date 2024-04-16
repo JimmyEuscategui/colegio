@@ -7,109 +7,11 @@
 <!-- Button trigger modal -->
 <div class="container">
     <br>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Agregar nuevo estudiante
-    </button>
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Registrar estudiante</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <form action="" method="POST"> {% csrf_token %}
-                            <div class="row">
-
-                                <div class="col-md-3">
-                                    <input type="text" id="txtPrimerNombre" name="txtPrimerNombre" class="form-control"
-                                        placeholder="Primer Nombre:" required>
-                                </div>
-                                <br>
-                                <div class="col-md-3">
-                                    <input type="text" id="txtSegundoNombre" name="txtSegundoNombre"
-                                        class="form-control" placeholder="Segundo Nombre:">
-                                </div>
-                                <br>
-                                <div class="col-md-3">
-                                    <input type="text" id="txtPrimerApellido" name="txtPrimerApellido"
-                                        class="form-control" placeholder="Primer Apellido" required>
-                                </div>
-                                <br>
-                                <div class="col-md-3">
-                                    <input type="text" id="txtSegundoApellido" name="txtSegundoApellido"
-                                        class="form-control" placeholder="Segundo Apellido" required>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <select id="idTipo" name="Tipo">
-                                        {% for item in documentos %}
-                                        <option value="{{ item.idTipo }}">{{ item.documento }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <br>
-                                <div class="col-md-3">
-                                    <input type="text" id="txtDocumento" name="txtDocumento" class="form-control"
-                                        placeholder="Documento">
-                                </div>
-                                <br>
-                                <div class="col-md-3">
-                                    <label for="idCurso">Curso</label>
-                                    <select id="idCurso" name="Curso">
-                                        {% for item in cursos %}
-                                        <option value="{{ item.idCurso }}">{{ item.curso }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <br>
-                                <div class="col-md-3">
-                                    <input type="text" id="txtTelefono" name="txtTelefono" class="form-control"
-                                        placeholder="Celular" required>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label for="idSede">Sede</label>
-                                    <select id="idSede" name="Sede">
-                                        {% for item in sedes %}
-                                        <option value="{{ item.idSede }}">{{ item.sede }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <br>
-                                <div class="col-md-4">
-
-                                    <input type="email" id="txtEmail" name="txtEmail" class="form-control"
-                                        placeholder="Email">
-                                </div>
-                                <br>
-                                <div class="col-md-6">
-
-                                    <input type="file" id="imagen" name="imagen" class="form-control" placeholder="Foto"
-                                        required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button name="" type="submit" class="btn btn-success">Guardar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fin de la modal registrar -->
-  
+    <!--Boton para ir a formulario de registrar-->
+    <a href="{% url 'createEstudiante' %}" class="btn btn-outline-success w-100 mt-5">Agregar nuevo estudiante</a>
+    <br>
+    <!-- Fin del formulario registrar -->
+    <br>
     <!--Tabla de estudiantes-->
     <div class="container">
         <div class="row g-0 text-center">
@@ -141,10 +43,22 @@
                                 <td>{{estudiante.idTipo.documento|slice:":2"}} - {{estudiante.documento}}</td>
                                 <td>{{estudiante.telefono}}</td>
                                 <td>{{estudiante.email}}</td>
-                                <td><img src="{{estudiante.foto.url}}" alt="{{estudiante.primerNombre}}"
-                                        style="max-width: 100px; max-height: 100px;"></td>
+                                <td>
+                                    <img src="{{estudiante.foto.url}}" alt="{{estudiante.primerNombre}}"
+                                        style="max-width: 100px; max-height: 100px;">
+                                </td>
                                 <td>{{estudiante.idSede}}</td>
-                                <td></td>
+                                <td>
+                                    <a href="{% url 'editarEstudiante' id=estudiante.idEstudiante %}"
+                                        class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                    <form action="" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <a href="{% url 'eliminarEstudiante' id=estudiante.idEstudiante %}" class="btn btn-danger" 
+                                            onclick="return confirm('¿Estás seguro de que quieres eliminar este estudiante?')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </form>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
