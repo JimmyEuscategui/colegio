@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse
+
 # Create your views here.
 
 def home(request):
@@ -9,4 +10,3 @@ def personal(request):
 
 def acudiente(request):
     return render(request, "secretaria/acudiente.html")
-    

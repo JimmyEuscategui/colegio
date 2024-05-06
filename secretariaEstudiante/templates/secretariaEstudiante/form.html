@@ -1,0 +1,54 @@
+
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {% for campo in formulario %}
+
+    <!-- Para cuando no hay selects
+     <div class="mb-3">
+        <label for="" class="form-label">{{ campo.label }}</label>
+        <input 
+        type="{{ campo.field.widget.input_type }}"
+        class="form-control"
+        id=""
+        aria-describedby="helpId"
+        placeholder="{{ campo.label }}"
+        value="{{ campo.value | default:'' }}">
+    </div> -->
+
+    <div class="mb-3">
+        <label for="" class="form-label">{{ campo.label }}</label>
+        <br>
+        {% if campo.field.widget.input_type == 'file' and campo.value %}
+        <img src="{{MEDIA_URL}}/media/{{ campo.value }}" width="100" srcset="">
+        {% endif %}
+        {% if campo.field.widget.input_type != 'select' %}
+        <input type="{{ campo.field.widget.input_type }}" 
+        class="form-control" 
+        name="{{ campo.name }}" 
+        id=""
+        aria-describedby="helpId" 
+        placeholder="{{ campo.label }}"
+        value="{{ campo.value | default:'' }}">
+        {% else %}
+        <select class="form-control" 
+        name="{{ campo.name }}" 
+        id="{{ campo.id }}" 
+        aria-describedby="helpId">
+            {% for choice in campo.field.choices %}
+            <option value="{{ choice.0 }}" {% if choice.0 == campo.value %}selected{% endif %}>{{ choice.1 }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+    </div>  
+
+    <div class="col-12 help-text">{{ campo.errors }}</div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-6">
+            <input name="" id="" class="btn btn-outline-success w-100 mt-3" type="submit" value="Actualizar Información">
+        </div>
+        <div class="col-md-6">
+            <a name="" id="" class="btn btn-outline-danger w-100 mt-3" href="{% url 'Estudiante' %}" role="button">Cancelar</a>
+        </div>
+    </div>    
+</form>

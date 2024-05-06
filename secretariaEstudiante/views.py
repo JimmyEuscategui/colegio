@@ -10,28 +10,20 @@ def estudiente(request):
     sedes=sede.objects.all()
     return render(request, "secretariaEstudiante/estudiante.html", {"estudiantes":estudiantes, "documentos":documentos, "cursos":cursos, "sedes":sedes})
 
-def createEstudiante(request):
-    if request.method == 'POST':
-        form = EstudianteForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Procesar el formulario
-            form.save()
-            return redirect('estudiante')
-    else:
-        form = EstudianteForm()
-    
-    return render(request, 'secretariaEstudiante/createEstudiante.html', {'form': form})
+def crearEstudiante(request):
+    formulario = EstudianteForm(request.POST or None, request.FILES or None)
+    if formulario.is_valid():
+        formulario.save()
+        return redirect('Estudiante')
+    return render(request, 'secretariaEstudiante/createEstudiante.html', {'formulario':formulario})
 
 def editarEstudiante(request, id):
-    editar = get_object_or_404(estudiante, idEstudiante=id)
-    if request.method == "POST":
-        form = EstudianteForm(request.POST, request.FILES, instance=editar)
-        if form.is_valid():
-            form.save()
-            return redirect('Estudiante')
-    else:
-        form = EstudianteForm(instance=editar)
-    return render(request, 'secretariaEstudiante/editarEstudiante.html', {'form': form})
+    estudiantes= estudiante.objects.get(idEstudiante=id)
+    formulario = EstudianteForm(request.POST or None, request.FILES or None, instance=estudiantes)
+    if formulario.is_valid() and request.method == 'POST':
+        formulario.save()
+        return redirect('Estudiante')
+    return render(request, 'secretariaEstudiante/editarEstudiante.html', {'formulario':formulario})
 
 def eliminarEstudiante(request, id):
     eliminar = get_object_or_404(estudiante, idEstudiante=id)

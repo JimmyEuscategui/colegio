@@ -1,5 +1,24 @@
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" >Guardar Estudiante</button>
-</form>
+{% extends "secretaria/baseSecretaria.html" %}
+
+{% load static %}
+
+{% block title %}Estudiante{% endblock %}
+{% block content %}
+<br><br><br><br>
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center" >
+            Crear Estudiante Nuevo
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Datos del estudainte</h4>
+            {% include 'secretariaEstudiante/form.html' %}
+
+        </div>
+        <div class="card-footer text-muted">
+
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}
