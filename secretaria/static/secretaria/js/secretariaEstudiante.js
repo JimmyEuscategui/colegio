@@ -35,20 +35,29 @@ $(document).ready(function () {
                 extend: "excelHtml5",
                 text: "<i class='fa-solid fa-file-csv'></i>",
                 tittleAttr: "Exportar a Excel",
-                className: "btn btn-success"
+                className: "btn btn-success",
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6] 
+                }
             },
             {
                 extend: "pdfHtml5",
                 text: "<i class='fa-solid fa-file-pdf'></i>",
                 tittleAttr: "Exportar a pdf",
-                className: "btn btn-danger"
+                className: "btn btn-danger",
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6] 
+                }
             },
             {
                 extend: "print",
                 text: "<i class='fa fa-print'></i>",
                 tittleAttr: "Imprimir",
-                className: "btn btn-info"
-            }  // Agrega los botones de exportación que desees
+                className: "btn btn-info",
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6] 
+                }
+            }
         ],
     });
 });
