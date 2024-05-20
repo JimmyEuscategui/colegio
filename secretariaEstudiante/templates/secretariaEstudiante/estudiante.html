@@ -60,8 +60,8 @@
                                             class="fas fa-edit"></i></a>
                                     <form action="" method="post" style="display: inline;">
                                         {% csrf_token %}
-                                        <a href="{% url 'eliminarEstudiante' id=estudiante.idEstudiante %}" class="btn btn-danger"
-                                            onclick="return confirm('¿Estás seguro de que quieres eliminar este estudiante?')">
+                                        <a href="{% url 'eliminarEstudiante' id=estudiante.idEstudiante %}" class="btn btn-danger eliminar-estudiante"
+                                        onclick="return confirmDelete(event, '{{ estudiante.nombre }}')">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </form>

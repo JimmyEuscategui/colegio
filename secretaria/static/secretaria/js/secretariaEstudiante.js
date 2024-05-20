@@ -1,3 +1,4 @@
+//DataTable
 $(document).ready(function () {
     $('#dataTable').DataTable({
         "language": {
@@ -25,10 +26,10 @@ $(document).ready(function () {
         "aLengthMenu": [[10, 25, 30, -1], [10, 25, 30, "All"]],
         "iDisplayLength": 10,
         "columnDefs": [
-            { "orderable": false, "targets": [0, 1, 3, 4, 5, 7, 8]}, // Deshabilita el orden en las columnas 0, 1, 3, 4, 5, 6 y 8
+            { "orderable": false, "targets": [0, 1, 3, 4, 5, 7, 8] }, // Deshabilita el orden en las columnas 0, 1, 3, 4, 5, 6 y 8
             { "className": "dt-center", "targets": "_all" }
         ],
-        "responsive":"True",
+        "responsive": "True",
         "dom": "<'row'<'col-md-2'l><'col-md-6 text-md-center'B><'col-md-4 text-md-end'f>>rt<'row'<'col-md-2'i><'col-md-6'><'col-md-4 text-md-end'p>>",
         "buttons": [
             {
@@ -37,7 +38,7 @@ $(document).ready(function () {
                 tittleAttr: "Exportar a Excel",
                 className: "btn btn-success",
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6] 
+                    columns: [0, 1, 2, 3, 4, 5, 6]
                 }
             },
             {
@@ -46,7 +47,7 @@ $(document).ready(function () {
                 tittleAttr: "Exportar a pdf",
                 className: "btn btn-danger",
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6] 
+                    columns: [0, 1, 2, 3, 4, 5, 6]
                 }
             },
             {
@@ -55,9 +56,32 @@ $(document).ready(function () {
                 tittleAttr: "Imprimir",
                 className: "btn btn-info",
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6] 
+                    columns: [0, 1, 2, 3, 4, 5, 6]
                 }
             }
         ],
     });
+});
+
+//SweetAlert2 eliminar estudiante
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.eliminar-estudiante').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const url = this.getAttribute('href');
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'No podrás revertir esto',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminarlo!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = url;
+        }
+      });
+    });
+  });
 });
