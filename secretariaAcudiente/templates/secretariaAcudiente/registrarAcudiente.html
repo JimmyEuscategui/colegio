@@ -1,0 +1,86 @@
+{% extends "secretaria/baseSecretaria.html" %}
+
+{% load static %}
+
+{% block title %}Personal{% endblock %}
+{% block content %}
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center" >
+            <h5 class="my-3">
+                {% if request.resolver_match.url_name == 'registrarAcudiente' %}
+                Agregar acudiente
+                {% else %}
+                Editar acudiente
+                <small>{{ acudiente.primerNombre }}</small>
+                {% endif %}
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                {% if acudiente_form.errors %}
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        {% for field, errors in acudiente_form.errors.items %}
+                                        {% for error in errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                <div class="row">
+                                    {% for field in acudiente_form %}
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3 row align-items-center">
+                                                <label class="col-sm-3 col-form-label">{{ field.label_tag }}</label>
+                                                <div class="col-sm-8">
+                                                    {% if field.name == 'foto' %} 
+                                                        {% if field.value %}
+                                                            <img src="{{ field.value.url }}" class="img-fluid" width="200" alt="Imagen">
+                                                        {% endif %}
+                                                        {{ field }}
+                                                    {% else %}
+                                                        {{ field }}
+                                                        {% if field.errors %}
+                                                            <div class="invalid-feedback">
+                                                                {{ field.errors|striptags }}
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="submit" value="{% if request.resolver_match.url_name == 'registrarAcudiente' %}Agregar{% else %}Actualizar{% endif %}" class="btn btn-outline-success w-100 mb-3">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="button" onclick="window.location.href='{% url 'Acudiente' %}'" class="btn btn-outline-danger w-100 mb-3">Cancelar</button>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

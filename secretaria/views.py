@@ -8,5 +8,3 @@ def home(request):
 def personal(request):
     return render(request, "secretaria/personal.html")
 
-def acudiente(request):
-    return render(request, "secretaria/acudiente.html")

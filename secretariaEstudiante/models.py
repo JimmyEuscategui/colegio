@@ -1,4 +1,5 @@
 from django.db import models
+from django.apps import apps
 
 # Create your models here.
 
@@ -36,6 +37,7 @@ class estudiante(models.Model):
     telefono = models.CharField(max_length=10)
     foto = models.ImageField(upload_to='secretariaEstudiante') #lo que va en la comillas es a donde va guardada la imagen
     idSede = models.ForeignKey(sede, on_delete=models.SET_NULL, null=True)
+    acudiente = models.ForeignKey('secretariaAcudiente.Acudiente', on_delete=models.SET_NULL, null=True, blank=True, related_name='estudiantes')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
     
